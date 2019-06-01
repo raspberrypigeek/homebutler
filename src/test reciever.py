@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pika
 
+
 exchangeserver = str('192.168.1.222')
 
 credentials = pika.PlainCredentials('homebutler', 'homebutler')
@@ -15,6 +16,6 @@ def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
 
 
-channel.basic_consume(callback ,queue='homebutler',   no_ack=True)
+channel.basic_consume(on_message_callback=callback , queue='homebutler',   auto_ack=True)
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
